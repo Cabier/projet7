@@ -1,0 +1,60 @@
+.Navbar {
+    padding: 0;
+     margin-bottom: 10%;
+     background-color: white;
+     box-shadow: 2px 2px 5px  whitesmoke;
+     display: flex;
+     justify-content: center;
+     color: white;
+     align-items: center;
+     
+ }
+ .Navbar a {
+     font-size: 100%;
+     margin:10px;
+     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+     color: black;
+     text-decoration: none;
+ }
+ .Navbar a:hover {
+     cursor: pointer;
+ } 
+ .body {
+     padding: 0;
+     margin: 0;
+ }
+ 
+ .logo {
+     
+     width: 8%;
+ }
+ .little-logo {
+     display: none;
+ }
+ .deconnexion {
+    font-size: 100%;
+    text-decoration: none;
+ }
+ @media screen and (max-width: 1080px) {
+     .little-logo {
+         display: none;
+     }
+     
+ }
+ @media screen and (max-width: 812px) and (min-width:375px) {
+     
+     .little-logo {
+         display: none;
+         font-size: 50px;
+         width: 20%;
+     }
+     
+ }
+ @media screen and (max-width: 375px) {
+     .logo {
+         display: none;
+     }
+     .little-logo {
+         display: inline-block;
+ }
+ }

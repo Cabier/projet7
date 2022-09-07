@@ -1,0 +1,59 @@
+@import "../../styles/settings";
+#root {
+  width: 100%;
+}
+
+
+
+.Login {
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.LoginForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.LoginForm input{
+    margin: 10% 0 10% 0;
+    width: 100%;
+    height: 50px;
+    font-size: 150%;
+}
+.loginButton {
+    font-size: 150%;
+    margin-top: 8%;
+    padding: 4%
+}
+
+.LoginForm button{
+    
+    &:hover{
+    cursor: pointer;
+}
+
+}
+
+h1 {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+@media screen and (min-width:375px) {
+
+
+}
+@media screen and (min-width:600px) {
+
+
+}
+@media screen and (min-width:801px) {
+
+
+
+}

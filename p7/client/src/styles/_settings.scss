@@ -1,0 +1,40 @@
+
+  
+  $primary-color: #f57251;
+  $secondary-color: #38618c;
+  $tertiary-color: #a13d63;
+  $pure-white: #ffffff;
+  $white: #f5f5f5;
+  $grey: #eeeeee;
+  $black: #12100e;
+  
+  @mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  @mixin avatar {
+    height: 60px;
+    width: 60px;
+    border-radius: 100%;
+    border: solid 1px $black;
+  }
+  
+  * {
+    font-family: "Ubuntu";
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    @include flex-center;
+    width: 100%;
+    background: $primary-color;
+  }
+  
+  main {
+    @include flex-center;
+  }
+  

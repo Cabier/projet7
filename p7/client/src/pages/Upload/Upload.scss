@@ -1,0 +1,52 @@
+@import "../../styles/settings";
+
+.Upload {
+  width: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.UploadForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.UploadForm input,
+.btn-upload {
+  margin: 5% 0;
+  width: 100%;
+  padding: 5%;
+  font-size: 20px;
+}
+
+.btn-upload {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+h1 {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+.Navbar {
+
+    margin-bottom: 10%;
+}
+
+@media screen and (min-width:480px) {
+
+
+}
+@media screen and (min-width:600px) {
+
+
+}
+@media screen and (min-width:801px) {
+
+
+
+}
