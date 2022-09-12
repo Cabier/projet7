@@ -17,7 +17,7 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
-router.post("/", auth,upload.single("image"), (req, res) => {
+router.post("/", upload.single("image"),auth, (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
   const imageTitre = req.body.imageTitre;
@@ -34,10 +34,11 @@ router.post("/", auth,upload.single("image"), (req, res) => {
     }
 
     connexion.query(
-      "INSERT INTO uploads (id, title, description, image, author) VALUES ( ?, ? , ? , ?, ?);",
-      [results.length + 2, title, description, imageTitre, author],
+      "INSERT INTO uploads ( title, description, image, author) VALUES (  ? , ? , ?, ?);",
+      [ title, description, imageTitre, author],
       (err, result) => {
         if (err) {
+          console.log("there")
           res.status(404).json({
             message: "Error",
             data: err,
@@ -90,20 +91,29 @@ router.get("/byUser/:username", auth,(req, res) => {
     }
   );
 });
-router.delete("/delete",auth, (req, res) => {
+router.delete("/delete/:id",auth, (req, res) => {
   const author = req.body.author;
-  
-  connexion.query(
-    "DELETE FROM uploads   WHERE id  ;",
-    author,
-   (err, results) => {
-    if (err) {
-      res.status(404).json({ err });
-      throw err;
+  connexion.query("SELECT * FROM uploads WHERE id = ?",[req.params.id], function(err,results){
+    if(err|| !results.length){
+      return res.status(404).send('error')
     }
-    res.status(200).json(results);
-  });
-})
+  const upload = results[0];
+//verification si admin ou user qui a publié le post
+ if(req.auth.admin||upload.author === req.auth.username){
+  connexion.query(
+    "DELETE FROM uploads WHERE id =?;",
+    [req.params.id],
+    (err,results) => {
+      if(err) {
+        res.status(404).json ({err});
+        throw err;
+      }
+      res.status(200).json(results)
+    });
+  
+ } else {
+  return res.status(403).send('Forbidden')
+ }})})
 
 
 router.patch('/like',auth, (req, res) => {

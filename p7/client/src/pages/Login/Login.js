@@ -10,11 +10,10 @@ function Login(props) {
   const [password, setPassword] = useState("");
   
   const [errorMessage, setErrorMessage] = useState("");
-
   let navigate = useNavigate();
 
   const login = () => {
-    Axios.post("http://localhost:5000/user/login", {
+    Axios.post('http://localhost:5000/user/login', {
       username: username,
       password: password,
     }).then((response) => {
@@ -27,6 +26,7 @@ function Login(props) {
         console.group(props);
         localStorage.setItem("username", response.data.username);
         localStorage.setItem("token",response.data.token)
+        Axios.defaults.headers.common.authorization = `Bearer ${response.data.token}`
         navigate("/home", { replace: true });
       }
     }).catch((err)=>{

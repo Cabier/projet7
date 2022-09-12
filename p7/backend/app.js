@@ -5,7 +5,7 @@ require("dotenv").config();
 const userRoute = require("./routes/User");
 const path = require("path");
 const uploadRoute = require("./routes/Upload");
-
+const commentRoute = require("./routes/Comment")
 
 const bodyParserErrorHandler = require('express-body-parser-error-handler')
 const app = express();
@@ -31,6 +31,7 @@ app.use(bodyParser.json());
 //app.use(helmet());
 app.use("/user", userRoute);
 app.use("/upload",uploadRoute);
+app.use("/comment",commentRoute);
 //app.use("/auth",userRoute);
 app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "images")));

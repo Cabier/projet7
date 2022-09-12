@@ -3,16 +3,29 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const connexion = require("../database");
-const auth = require("../middleware/auth")
+const auth = require("../middleware/Auth");
 require("dotenv").config();
+//router .get return le profil de l'utilisateur
+router.get("/profil", auth, async (req, res) => {
+  connexion.query(
+    "SELECT * FROM users WHERE username = ?",
+    [req.auth.username],
+    function (err, results) {
+      if (err || !results.length) {
+        return res.status(404);
+      }
+      return res.status(200).json(results[0]);
+    }
+  );
+});
 
-router.post("/register",auth, async (req, res) => {
+router.post("/register", async (req, res) => {
   const username = req.body.username;
   const firstname = req.body.firstName;
   const email = req.body.email;
   const password = req.body.password;
-  const hash = await bcrypt.hash(password, 10);
-  console.log("hash", hash);
+  const hashPassword = await bcrypt.hash(password, 10);
+  console.log("hash", hashPassword);
   const isAdmin = req.body.isAdmin;
   connexion.query("SELECT * FROM users;", username, (err, results) => {
     if (err) {
@@ -26,8 +39,8 @@ router.post("/register",auth, async (req, res) => {
     }
 
     connexion.query(
-      "INSERT INTO users (id,username,firstname,email, hash,isAdmin) VALUES (?,?,?,?,?,?);",
-      [results.length, username, firstname, email, hash, isAdmin],
+      "INSERT INTO users (id,username,firstname,email, hashPassword,isAdmin) VALUES (?,?,?,?,?,?);",
+      [results.length, username, firstname, email, hashPassword, isAdmin],
       (err, user) => {
         if (err) {
           res.status(404).json({
@@ -44,7 +57,7 @@ router.post("/register",auth, async (req, res) => {
   });
 });
 
-router.post("/login",auth, (req, res) => {
+router.post("/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
@@ -53,28 +66,32 @@ router.post("/login",auth, (req, res) => {
     username,
     (error, results) => {
       if (results.length > 0) {
-        bcrypt.compare(password, results[0].hash, function (err, result) {
-          if (err) return res.status(500).send({ message: "Error server" });
-          if (!result) {
-            return res.status(404).json({
-              loggedIn: false,
-              message: "Invalid Password",
-            });
-          } else
-            return res.status(200).json({
-              loggedIn: true,
-              message: "Login Successful",
-              username,
+        bcrypt.compare(
+          password,
+          results[0].hashPassword,
+          function (err, result) {
+            if (err) return res.status(500).send({ message: "Error server" });
+            if (!result) {
+              return res.status(404).json({
+                loggedIn: false,
+                message: "Invalid Password",
+              });
+            } else
+              return res.status(200).json({
+                loggedIn: true,
+                message: "Login Successful",
+                username,
 
-              token: jwt.sign(
-                { username, admin: results[0].isAdmin },
-                process.env.JWT_SECRET,
-                {
-                  expiresIn: "24h",
-                }
-              ),
-            });
-        });
+                token: jwt.sign(
+                  { username, admin: results[0].admin },
+                  process.env.JWT_SECRET,
+                  {
+                    expiresIn: "24h",
+                  }
+                ),
+              });
+          }
+        );
       } else {
         return res
           .status(401)
@@ -84,7 +101,7 @@ router.post("/login",auth, (req, res) => {
   );
 });
 
-router.delete("/desactivateAccount/:id",auth, (req, res) => {
+router.delete("/desactivateAccount/:id", auth, (req, res) => {
   const id = req.params.id;
   console.log("identifiant", id);
   const sql = "DELETE FROM users WHERE username =? ";
@@ -92,6 +109,11 @@ router.delete("/desactivateAccount/:id",auth, (req, res) => {
   connexion.query(sql, sqlParams, (error, results) => {
     if (error) {
       res.status(400).json({ error: error });
+    }
+    if (req.params.id !== req.auth.admin) {
+      res
+        .status(401)
+        .json({ message: "seul l'administrateur peut supprimer le post" });
     } else {
       res.status(200).json({ message: "Utilisateur supprimé" });
     }

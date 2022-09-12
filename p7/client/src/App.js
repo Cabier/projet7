@@ -13,7 +13,7 @@ import Login from "./pages/Login/Login";
 import Upload from "./pages/Upload/Upload";
 import Profile from "./pages/Profile/Profile";
 import axios from "axios"
-
+//ligne 26 origin login
 function App() {
   const [loggedIn, setLogedIn] = useState(false);
   axios.defaults.headers.common.authorization = `Bearer ${localStorage.token}`

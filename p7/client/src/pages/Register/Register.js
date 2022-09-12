@@ -5,40 +5,46 @@ import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Register(props) {
+
   const [username, setUsername] = useState("");
   const [firstName, setfirstName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
   let navigate = useNavigate();
-  const register = (e) => {
-    e.preventDefault();
-    const userNameError = document.getElementById(".username.error");
-    const firstNameError = document.querySelector(".firstName.error");
-    const emailError = document.querySelector(".email.error");
-    const passwordError = document.querySelector(".password.error");
-    console.log(username);
+
+  const register = () => {
+
     Axios.post("http://localhost:5000/user/register", {
       username: username,
       firstName: firstName,
-      email:email,
+      email: email,
       password: password,
-      
-    }).then((res) => {
-      if (res.data.errors) {
-        userNameError.innerHTML = res.data.errors.userName;
-        firstNameError.innerHTML = res.data.errors.firstName
-        emailError.innerHTML = res.data.errors.email;
-        passwordError.innerHTML = res.data.errors.password;
-        
-      } else {
-        localStorage.setItem("loggedIn", true);
-        localStorage.setItem("username",username)
-        props.setLogedIn(true);
-        navigate("/home", { replace: true });
-  }});
-    
-  };
+    }).then((response) => {
+      Axios.post("http://localhost:5000/user/login", {
+        username: username,
+        password: password,
+      })
+        .then((response) => {
+          console.log(response.data);
 
+          if (response.data.loggedIn) {
+            localStorage.setItem("loggedIn", true);
+            props.setLogedIn(true);
+            console.group(props);
+            localStorage.setItem("username", response.data.username);
+            localStorage.setItem("token", response.data.token);
+            Axios.defaults.headers.common.authorization = `Bearer ${response.data.token}`;
+            navigate("/home", { replace: true });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setErrorMessage(err.response.data.message);
+        });
+    });
+  };
 
   return (
     <div className="Register">
@@ -47,38 +53,33 @@ function Register(props) {
         <input
           type="text"
           placeholder="Username..."
-          onChange={(event) => 
-            setUsername(event.target.value)}
-            value={username}
-          
+          onChange={(event) => setUsername(event.target.value)}
+          value={username}
         />
         <div className="Username error"></div>
         <input
           type="text"
           placeholder="firstName..."
-          onChange={(event) => 
-            setfirstName(event.target.value)}
-            value={firstName}
-          
+          onChange={(event) => setfirstName(event.target.value)}
+          value={firstName}
         />
         <div className="firstName error"></div>
         <input
           type="text"
           placeholder="email..."
-          onChange={(event) => 
-            setEmail(event.target.value)}
-            value={email}
-          
+          onChange={(event) => setEmail(event.target.value)}
+          value={email}
         />
         <input
           type="password"
           placeholder="Password..."
-          onChange={(event) => 
-            setPassword(event.target.value)}
-            value={password}
-          
+          onChange={(event) => setPassword(event.target.value)}
+          value={password}
         />
-        <button className="registerButton"onClick={register}>Register</button>
+        <button className="registerButton" onClick={() => register()}>
+          Register
+        </button>
+        <h1 style={{ color: "red" }}>{errorMessage} </h1>
       </div>
     </div>
   );

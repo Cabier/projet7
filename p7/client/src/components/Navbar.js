@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+
 import "./Navbar.scss";
-import { useEffect } from "react";
+
 import { useNavigate } from "react-router-dom";
 
 function Navbar(props) {
-  const [loggedIn, setLoggedIn] = useState(props.loggedIn);
+ 
   let navigate = useNavigate();
 
-  useEffect(() => {
-    setLoggedIn(props.loggedIn);
-  }, [props.loggedIn]);
+  
   return (
     <div className="Navbar">
       <img
@@ -17,7 +15,7 @@ function Navbar(props) {
         src="../imgs/logo/icon-left-font-recadre.png"
         alt="Groupomania"
       />
-      {loggedIn ? (
+      {localStorage.loggedIn ? (
         <>
           <a href="/">Home</a>
           <a href="/upload">Upload</a>
