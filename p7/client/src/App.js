@@ -23,7 +23,7 @@ function App() {
         <Navbar loggedIn={loggedIn} setLogedIn={setLogedIn} />
         <Routes>
           <Route path="/home" element={<Home />} />
-          <Route path="/" element={<Navigate replace to="/login" />} />
+          <Route path="/" element={<Navigate replace to="/home" />} />
           <Route exact path="/register" element={<Register setLogedIn={setLogedIn} />} />
           <Route
             exact

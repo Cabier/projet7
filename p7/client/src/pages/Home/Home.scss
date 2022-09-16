@@ -82,6 +82,13 @@
 
     
 }
+
+.description__input{
+    min-height: 50px;
+    font-size: 17px;
+    color:red;
+}
+
 @media screen and (max-width:375px) {
 .Navbar {
     display : flex;

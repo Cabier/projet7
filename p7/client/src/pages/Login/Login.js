@@ -24,6 +24,7 @@ function Login(props) {
         localStorage.setItem("loggedIn", true);
         props.setLogedIn(true);
         console.group(props);
+        console.log("*******----",props)
         localStorage.setItem("username", response.data.username);
         localStorage.setItem("token",response.data.token)
         Axios.defaults.headers.common.authorization = `Bearer ${response.data.token}`

@@ -29,6 +29,17 @@ function Upload() {
         console.log(err);
       });
   };
+  const modifyPost = async(id) => {
+    try {
+      const response = await Axios.put(
+        "http://localhost:5000/upload/put/" + id
+      );
+      response.status(200)
+      ;
+    } catch (err) {
+      throw err;
+    }
+  }
   
   return (
     <div className="Upload">
@@ -37,15 +48,15 @@ function Upload() {
         <input
           type="text"
           placeholder="Title..."
-          onChange={(event) => {
-            setTitle(event.target.value);
+          onChange={(event,modifyPost) => {
+            setTitle(event.target.value,modifyPost);
           }}
         />
         <input
           type="text"
           placeholder="Description..."
           onChange={(event) => {
-            setDescription(event.target.value);
+            setDescription(event.target.value,modifyPost);
           }}
         />
         <input type="file" onChange={(e) => setImage(e.target.files[0])} />

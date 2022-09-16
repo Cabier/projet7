@@ -10,6 +10,7 @@ import { faThumbsUp, faTrash } from "@fortawesome/free-solid-svg-icons";
 function Home() {
   const [uploads, setUploads] = useState([]);
   const [user, setUser] = useState({});
+  const [description, setDescription] = useState([]);
 
   useEffect(() => {
     getPosts();
@@ -26,6 +27,7 @@ function Home() {
   const getPosts = () => {
     Axios.get("http://localhost:5000/upload").then((response) => {
       setUploads(response.data);
+      setDescription(response.data.map((val) => val.description));
     });
   };
 
@@ -54,10 +56,32 @@ function Home() {
       throw err;
     }
   };
-  console.log("kawabunga", user);
+
+  const handleDescription = (event, key) => {
+    setDescription(
+      description.map((val, index) => {
+        if (key === index) return event.target.value;
+        else return val;
+      })
+    );
+  };
+
+  const updateDescription = (event, key) => {
+    Axios.put("http://localhost:5000/upload/modifyPost/" + uploads[key].id, {
+      description: description[key],
+    })
+      .then(() => {
+        //navigate("/home", { replace: true });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="Home">
       {uploads.map((val, key) => {
+        const isAdmin = user.isAdmin || user.username === val.author;
         return (
           <div className="Post">
             <div className="Image">
@@ -66,7 +90,7 @@ function Home() {
                   src={`${process.env.REACT_APP_API_URL}upload/Images?nameImg=${val.image}`}
                   alt=""
                 />
-                {user.isAdmin || user.username === val.author ? (
+                {isAdmin ? (
                   <FontAwesomeIcon
                     id
                     className="trash"
@@ -80,12 +104,25 @@ function Home() {
               <div className="title">
                 {val.title} / posté par : {val.author}
               </div>
-              <div className="description">{val.description}</div>
+              {isAdmin ? (
+                <input
+                  type="text"
+                  key={key}
+                  value={description[key]}
+                  className="description__input"
+                  placeholder="Description..."
+                  onChange={(e) => handleDescription(e, key)}
+                  onBlur={(e) => updateDescription(e, key)}
+                />
+              ) : (
+                <div className="description">{val.description}</div>
+              )}
             </div>
             <div className="Engagement">
               <FontAwesomeIcon
                 id="likeButton"
                 icon={faThumbsUp}
+                style={{ cursor: "pointer" }}
                 onClick={() => {
                   likePost(val.id, key);
                 }}
