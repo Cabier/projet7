@@ -6,9 +6,10 @@ const userRoute = require("./routes/User");
 const path = require("path");
 const uploadRoute = require("./routes/Upload");
 const commentRoute = require("./routes/Comment")
-
+const helmet = require("helmet")
 const bodyParserErrorHandler = require('express-body-parser-error-handler')
 const app = express();
+
 app.use(cors());
 
 app.use((req, res, next) => {
@@ -36,4 +37,5 @@ app.use("/comment",commentRoute);
 app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(bodyParserErrorHandler());
+app.use(helmet({crossOriginEmbedderPolicy: false}))
 module.exports = app;

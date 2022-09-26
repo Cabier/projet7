@@ -15,20 +15,22 @@ import Profile from "./pages/Profile/Profile";
 import axios from "axios"
 //ligne 26 origin login
 function App() {
+
   const [loggedIn, setLogedIn] = useState(false);
   axios.defaults.headers.common.authorization = `Bearer ${localStorage.token}`
+ 
   return (
     <>
       <Router>
         <Navbar loggedIn={loggedIn} setLogedIn={setLogedIn} />
         <Routes>
           <Route path="/home" element={<Home />} />
-          <Route path="/" element={<Navigate replace to="/home" />} />
+          <Route path="/" element={<Navigate replace to="/login" />} />
           <Route exact path="/register" element={<Register setLogedIn={setLogedIn} />} />
           <Route
             exact
             path="/login"
-            element={<Login setLogedIn={setLogedIn} />}
+            element={<Login loggedIn={loggedIn} setLogedIn={setLogedIn} />}
           />
           <Route exact path="/upload" element={<Upload />} />
           <Route exact path="/profile" element={<Profile />} />

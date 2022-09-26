@@ -1,80 +1,45 @@
-# Getting Started with Create React App
+P7-Groupomania : un projet React.js Ce projet constitue un réseau social de l'entreprise Groupomania. Il permet à chaque utilisateur disposant d'un compte de poster des messages avec support multimédia. Chaque utilisateur visualise tous les posts. Les utilisateurs peuvent liker les posts, modifier leurs posts et supprimer leurs posts. L'admin peux faire toutes ces actions sur tous les posts.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+La structure Le projet est constitué de deux dossiers : -backend  et client (frontend).
 
-## Available Scripts
+La base de données est une base de données relationnelles Sql et son logiciel de gestion d'administration de base de données est workbench.
 
-In the project directory, you can run:
+Le frontend Utilisation du framework React.js. Le projet fonctionne avec React-router pour la navigation
 
-### `npm start`
+Installation Clôner le dépôt git
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Installation de la base de données Connexion avec ces paramètres: host: 'localhost', user: 'root', database: 'groupomania'
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Télécharger, installer et configurer un serveur mysql (Utilisation de Workbench pour ma part)
 
-### `npm test`
+Installation du backend Dans le dossier backend, installer npm et les dépendences avec la commande :
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+npm install
 
-### `npm run build`
+Puis, installer le serveur nodemon avec :
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+npm install nodemon
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Créer un base de données sql :
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Ajouter le fichier .sql à votre BDD
 
-### `npm run eject`
+Installation du frontend Dans le dossier client, installer les dependances avec la commande :
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+npm install
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Lancement de l'application
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Démarrer le frontend(client) dans le dossier p7, saisir la commande :
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+npm start
 
-## Learn More
+Cliquer sur ce lien  pour accéder à l'application
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Local: http://localhost:3000/
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Pour démarrer le backend saisir la commande nodemon server
 
-### Code Splitting
+affichage de listening on port 5000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-
-
-//mes pages ont peux y acceder meme si pas connecter mettre en page une verif avec if dans les routes
-
-//quand on s'inscrit on doit se connecter en automatique 
-
-// mettre en place un systeme pour supprimer un user
-
-//mettre en place un systeme admin is admin en boolean 
+Il faut évetuellement installer certaines dépendances côtés backend

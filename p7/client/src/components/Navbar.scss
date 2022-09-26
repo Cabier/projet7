@@ -55,6 +55,7 @@
          display: none;
      }
      .little-logo {
-         display: inline-block;
+         display: flex;
+         flex-wrap: wrap-reverse;
  }
  }

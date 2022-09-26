@@ -18,7 +18,7 @@ function Home() {
       .then(({ data }) => {
         setUser(data);
       })
-      .catch((err) => console.log("errrrrrrrrrrr", err));
+      .catch((err) => console.log("erreur", err));
     if (!localStorage.getItem("loggedIn")) {
       localStorage.setItem("loggedIn", false);
     }
@@ -83,7 +83,7 @@ function Home() {
       {uploads.map((val, key) => {
         const isAdmin = user.isAdmin || user.username === val.author;
         return (
-          <div className="Post">
+          <div key={key} className="Post">
             <div className="Image">
               <div className="Content">
                 <img

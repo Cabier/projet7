@@ -5,15 +5,11 @@ const jwt = require("jsonwebtoken");
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
+    //console.log("toktok",token)
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    
     const username = decodedToken.username;
-    console.log("usssssssssss",username)
-    const admin = decodedToken.isAdmin;
-    console.log("adadadadadadaddad",admin)
-    req.auth = { username, admin} 
-   console.log("reqayh",req.auth)
-    console.log("req",req.auth )
+    const admin = decodedToken.admin;
+    req.auth = { username, admin };
     if (req.body.username && req.body.username !== username) {
       throw "Invalid ID";
     } else {
