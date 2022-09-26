@@ -17,7 +17,7 @@ function Navbar(props) {
       />
       {localStorage.loggedIn ? (
         <>
-          <a href="/">Home</a>
+          <a href="/home">Home</a>
           <a href="/upload">Upload</a>
           <a href="/profile">Profile</a>
           <a href="/register">Register</a>
