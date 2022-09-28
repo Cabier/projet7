@@ -83,7 +83,7 @@ router.post("/login", (req, res) => {
                 username,
 
                 token: jwt.sign(
-                  { username, admin: results[0].admin },
+                  { username, admin: results[0].isAdmin },
                   process.env.JWT_SECRET,
                   {
                     expiresIn: "24h",
