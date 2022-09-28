@@ -26,14 +26,13 @@ function App() {
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Navigate replace to="/login" />} />
-          <Route exact path="/register" element={<Register setLogedIn={setLogedIn} />} />
+          <Route  path="/register" element={<Register setLogedIn={setLogedIn} />} />
           <Route
-            exact
             path="/login"
             element={<Login loggedIn={loggedIn} setLogedIn={setLogedIn} />}
           />
-          <Route exact path="/upload" element={<Upload />} />
-          <Route exact path="/profile" element={<Profile />} />
+          <Route  path="/upload" element={<Upload />} />
+          <Route  path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </>

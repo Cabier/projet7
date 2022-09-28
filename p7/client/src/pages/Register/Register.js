@@ -21,7 +21,7 @@ function Register(props) {
       firstName: firstName,
       email: email,
       password: password,
-    }).then((response) => {
+    }).then(() => {
       Axios.post("http://localhost:5000/user/login", {
         username: username,
         password: password,
@@ -30,7 +30,7 @@ function Register(props) {
           console.log(response.data);
 
           if (response.data.loggedIn) {
-            localStorage.setItem("loggedIn", true);
+            localStorage.setItem("loggedIn", "true");
             props.setLogedIn(true);
             console.group(props);
             localStorage.setItem("username", response.data.username);

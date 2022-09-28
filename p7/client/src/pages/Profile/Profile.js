@@ -23,7 +23,7 @@ function Profile() {
 
     localStorage.clear();
 
-    navigate("/login", { replace: true });
+    navigate("/register", { replace: true });
   };
 
   return (

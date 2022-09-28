@@ -17,7 +17,7 @@ function Login(props) {
     if (props.loggedIn === true) {
       navigate("/home", { replace: true });
     }
-  }, []);
+  });
 
   const login = () => {
     Axios.post("http://localhost:5000/user/login", {

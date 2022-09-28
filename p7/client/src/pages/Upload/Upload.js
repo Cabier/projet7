@@ -3,6 +3,7 @@ import "./Upload.scss";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 function Upload() {
+  //stocker la data de la webApi dans le state
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
@@ -20,7 +21,8 @@ function Upload() {
     formData.append("author", localStorage.getItem("username"));
     formData.append("image", image);
     formData.append("imageTitre", image.name);
-
+    console.log(formData.get("description"))
+    console.log(formData.get("image"))
     Axios.post(`${process.env.REACT_APP_API_URL}upload/`, formData)
       .then(() => {
         navigate("/home",{ replace: true });
