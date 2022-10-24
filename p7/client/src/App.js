@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 //import "./App.css";
 import {
   BrowserRouter as Router,
@@ -12,13 +12,14 @@ import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import Upload from "./pages/Upload/Upload";
 import Profile from "./pages/Profile/Profile";
-import axios from "axios"
+import axios from "axios";
 //ligne 26 origin login
-function App() {
+const isConnected = localStorage.getItem("loggedIn");
 
-  const [loggedIn, setLogedIn] = useState(false);
-  axios.defaults.headers.common.authorization = `Bearer ${localStorage.token}`
- 
+function App() {
+  const [loggedIn, setLogedIn] = useState(isConnected || false);
+  axios.defaults.headers.common.authorization = `Bearer ${localStorage.token}`;
+
   return (
     <>
       <Router>
@@ -26,13 +27,16 @@ function App() {
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Navigate replace to="/login" />} />
-          <Route  path="/register" element={<Register setLogedIn={setLogedIn} />} />
+          <Route
+            path="/register"
+            element={<Register setLogedIn={setLogedIn} />}
+          />
           <Route
             path="/login"
             element={<Login loggedIn={loggedIn} setLogedIn={setLogedIn} />}
           />
-          <Route  path="/upload" element={<Upload />} />
-          <Route  path="/profile" element={<Profile />} />
+          <Route path="/upload" element={<Upload />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </>

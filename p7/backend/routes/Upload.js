@@ -27,6 +27,7 @@ router.post("/", upload.single("image"), auth, (req, res) => {
   const description = req.body.description;
   const imageTitre = req.body.imageTitre;
   const author = req.body.author;
+  const dateCreation = req.body.dateCreation;
 
   connexion.query("SELECT * FROM uploads;", title, (err, results) => {
     if (err) {
@@ -40,8 +41,8 @@ router.post("/", upload.single("image"), auth, (req, res) => {
     // ENREGISTER DONNEES DANS BDD SQL
     connexion.query(
       //avec insert into on ajoute un objet à notre table sql(entre parenthèse c'est la liste des colonnes qu'on veut ajouter)
-      "INSERT INTO uploads ( title, description, image, author) VALUES (  ? , ? , ?, ?);",
-      [title, description, imageTitre, author],
+      "INSERT INTO uploads ( title, description, image, author , dateCreation) VALUES (  ? , ? , ?, ? , ?);",
+      [title, description, imageTitre, author, dateCreation],
       (err, result) => {
         if (err) {
           console.log("there");
@@ -67,7 +68,7 @@ router.get("/Images", function (req, res, next) {
     root: path.resolve(process.cwd() + "/images/uploads/"),
   };
   var fileName = req.query.nameImg;
- 
+
   res.status(200).sendFile(fileName, options, function (err) {
     if (err) next(err);
   });
@@ -80,16 +81,17 @@ router.get("/", auth, (req, res) => {
     if (err) {
       console.log(err);
     } else if (!token) {
-     // navigate("/login", { replace: true });
+      // navigate("/login", { replace: true });
     }
-    res.send(results);
-    console.log("resultsssssss",results)
+    res.status(200).json({
+      data: results,
+    });
   });
 });
 // afficher le profil de l'utilisateur
 router.get("/byUser/:username", auth, (req, res) => {
   const userName = req.body.username;
-  console.log("userName", userName);
+
   connexion.query(
     "SELECT * FROM uploads WHERE author = ?;",
     userName,
@@ -191,7 +193,7 @@ router.patch("/like", auth, (req, res) => {
       if (result.length === 0) {
         likes = likes + 1;
         const sqlInsert = `INSERT INTO likes ( post_Id,userLiking) VALUES ('${postId}', "${userLiking}")`;
-        
+
         connexion.query(sqlInsert, (err, result) => {
           if (err) {
             console.log(err);

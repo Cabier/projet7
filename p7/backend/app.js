@@ -5,9 +5,9 @@ require("dotenv").config();
 const userRoute = require("./routes/User");
 const path = require("path");
 const uploadRoute = require("./routes/Upload");
-const commentRoute = require("./routes/Comment")
-const helmet = require("helmet")
-const bodyParserErrorHandler = require('express-body-parser-error-handler')
+const commentRoute = require("./routes/Comment");
+const helmet = require("helmet");
+const bodyParserErrorHandler = require("express-body-parser-error-handler");
 const app = express();
 
 app.use(cors());
@@ -27,15 +27,16 @@ app.use((req, res, next) => {
 });
 
 // Parse le body des requetes en json
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // Sécurisation des headers
 //app.use(helmet());
 app.use("/user", userRoute);
-app.use("/upload",uploadRoute);
-app.use("/comment",commentRoute);
+app.use("/upload", uploadRoute);
+app.use("/comment", commentRoute);
 //app.use("/auth",userRoute);
 app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(bodyParserErrorHandler());
-app.use(helmet({crossOriginEmbedderPolicy: false}))
+app.use(helmet({ crossOriginEmbedderPolicy: false }));
 module.exports = app;

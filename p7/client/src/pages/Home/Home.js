@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Home.scss";
 import Axios from "axios";
 //import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsUp, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faThumbsUp,
+  faTrash,
+  faPencil,
+} from "@fortawesome/free-solid-svg-icons";
+import moment from "moment";
 
 //respondtata c'est l'array qu'on return
 //avec uploadmap je rends les uploads individuels
@@ -12,22 +17,27 @@ function Home() {
   const [user, setUser] = useState({});
   const [description, setDescription] = useState([]);
 
+  const inputRef = useRef([]);
+  console.log("''''''",inputRef)
+  //useref c'est comme une boite qui peut contenir une valeur mutable
+  //et permet de cibler un élément du DOM un peu à la manière d'un getElementById
   useEffect(() => {
     getPosts();
     Axios.get("http://localhost:5000/user/profil")
       .then(({ data }) => {
         setUser(data);
+        console.log("dataprofil",data)
       })
       .catch((err) => console.log("erreur", err));
     if (!localStorage.getItem("loggedIn")) {
       localStorage.setItem("loggedIn", false);
-    }
+    }console.log("logggg",localStorage)
   }, []);
 
   const getPosts = () => {
     Axios.get("http://localhost:5000/upload").then((response) => {
-      setUploads(response.data);
-      setDescription(response.data.map((val) => val.description));
+      setUploads(response.data.data);
+      setDescription(response.data.data.map((val) => val.description));
     });
   };
 
@@ -101,19 +111,29 @@ function Home() {
               </div>
             </div>
             <div className="Content">
-              <div className="title">
-                {val.title} / posté par : {val.author}
+              <div className="title">{val.title}</div>
+              <div className="date-creation">
+                Posté par : {val.author} le :{" "} 
+                {moment(val.dateCreation).format("DD/MM/YYYY à h:mm:ss a")}
               </div>
               {isAdmin ? (
-                <input
-                  type="text"
-                  key={key}
-                  value={description[key]}
-                  className="description__input"
-                  placeholder="Description..."
-                  onChange={(e) => handleDescription(e, key)}
-                  onBlur={(e) => updateDescription(e, key)}
-                />
+                <div className="edit__css">
+                  <input
+                    type="text"
+                    key={key}
+                    ref={(element) => (inputRef.current[key] = element)}
+                    value={description[key]}
+                    className="description__input"
+                    placeholder="Description..."
+                    onChange={(e) => handleDescription(e, key)}
+                    onBlur={(e) => updateDescription(e, key)}
+                  />
+                  <FontAwesomeIcon
+                    className="trash__css"
+                    icon={faPencil}
+                    onClick={() => inputRef.current[key].focus()}
+                  />
+                </div>
               ) : (
                 <div className="description">{val.description}</div>
               )}

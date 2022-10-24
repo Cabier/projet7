@@ -14,7 +14,11 @@ function Login(props) {
   let navigate = useNavigate();
 
   useEffect(() => {
-    if (props.loggedIn === true) {
+    if (props.loggedIn) {
+      console.log(
+        "🚀 ~ file: Login.js ~ line 18 ~ useEffect ~ props.loggedIn ",
+        props.loggedIn
+      );
       navigate("/home", { replace: true });
     }
   });

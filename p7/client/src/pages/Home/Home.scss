@@ -1,121 +1,129 @@
 .Home {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .Home .Post {
-    
-   
-    border: 2px solid black;
-    display: flex;
-    flex-direction: column;
-    margin: 50px;
-    width:30%;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+  width: 30%;
 }
 
-.Home .Post .Image{
-  
-   background-color: white;
+.Home .Post .Image {
+  background-color: white;
 }
 
 .Home .Post .Image img {
-    width: 100%;
+  width: 100%;
 }
 
-.Home .Post .Content{
-    
-    display: flex;
-    flex-direction: column;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background-color: white;
-    
+.Home .Post .Content {
+  display: flex;
+  flex-direction: column;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  background-color: white;
 }
 
 .Home .Post .Content .title {
-    flex: 30%;
-    text-align: center;
-    font-size: 20px;
+  flex: 30%;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.Home .Post .Content .date-creation {
+  text-align: center;
+  font-size: 20px;
 }
 
 .Home .Post .Content .description {
-    flex: 50%;
-    text-align: center;
-    padding-bottom: 60px;
-    border-top: solid 1px black;
-    word-wrap: break-word;
-    color: red;
-    overflow: hidden;
+  flex: 50%;
+  text-align: center;
+  padding-bottom: 60px;
+  border-top: solid 1px black;
+  word-wrap: break-word;
+  color: red;
+  overflow: hidden;
 }
 
 .Home .Post .Engagement {
-    flex: 20%;
-    display: grid;
-    place-items: center;
+  flex: 20%;
+  display: grid;
+  place-items: center;
+  word-wrap: break-word;
 }
 .Home .Post .Engagement #icon {
-    font-size: 40px;
-     color: grey;
-
+  font-size: 40px;
+  color: grey;
 }
-.Home .Post .Engagement #icon:hover{
-    cursor: pointer;
+.Home .Post .Engagement #icon:hover {
+  cursor: pointer;
 }
-.Home .Post .Engagement #icon:active{
-    color: black;
-
+.Home .Post .Engagement #icon:active {
+  color: black;
 }
 .trash {
-    font-size: 20px;
-    position: absolute ;
-    
-      color: #f57251;
-      transition: .3s;
-    &:hover {
-      color: red;
-      transition: .3s;
-      cursor: pointer;
-    }
+  font-size: 20px;
+  position: absolute;
 
-    
+  color: #f57251;
+  transition: 0.3s;
+  &:hover {
+    color: red;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+}
+.trash__css {
+  font-size: 20px;
+
+  color: #f57251;
+  &:hover {
+    color: red;
+    cursor: pointer;
+  }
 }
 
-.description__input{
-    min-height: 50px;
-    font-size: 17px;
-    color:red;
+.description__input {
+  min-height: 50px;
+  width: 95%;
+  font-size: 17px;
+  margin: 0 5px 5px 5px;
+  color: red;
+  word-wrap: break-word;
 }
 
-@media screen and (max-width:375px) {
-.Navbar {
-    display : flex;
+.edit__css {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+@media screen and (max-width: 375px) {
+  .Navbar {
+    display: flex;
     flex-flow: wrap;
+  }
 }
-
+@media screen and (max-width: 600px) {
 }
-@media screen and (max-width:600px) {
-
-
+@media screen and (max-width: 801px) {
 }
-@media screen and (max-width:801px) {
-
-
-
-}
-
 
 @media screen and (max-width: 1080px) {
-    .little-logo {
-        display: none;
-    }
-    
-    
+  .little-logo {
+    display: none;
+  }
 
-.Home .Post {
+  .Home .Post {
     width: auto;
-    margin: 10%
-}
+    margin: 10%;
+  }
 }

@@ -7,7 +7,7 @@ function Upload() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-  console.log("image***",image)
+  console.log("image***", image);
   let navigate = useNavigate();
 
   const upload = (e) => {
@@ -21,28 +21,27 @@ function Upload() {
     formData.append("author", localStorage.getItem("username"));
     formData.append("image", image);
     formData.append("imageTitre", image.name);
-    console.log(formData.get("description"))
-    console.log(formData.get("image"))
+    formData.append("dateCreation", new Date());
+  
     Axios.post(`${process.env.REACT_APP_API_URL}upload/`, formData)
       .then(() => {
-        navigate("/home",{ replace: true });
+        navigate("/home", { replace: true });
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  const modifyPost = async(id) => {
+  const modifyPost = async (id) => {
     try {
       const response = await Axios.put(
         "http://localhost:5000/upload/put/" + id
       );
-      response.status(200)
-      ;
+      response.status(200);
     } catch (err) {
       throw err;
     }
-  }
-  
+  };
+
   return (
     <div className="Upload">
       <h1>Create a post</h1>
@@ -50,19 +49,21 @@ function Upload() {
         <input
           type="text"
           placeholder="Title..."
-          onChange={(event,modifyPost) => {
-            setTitle(event.target.value,modifyPost);
+          onChange={(event, modifyPost) => {
+            setTitle(event.target.value, modifyPost);
           }}
         />
         <input
           type="text"
           placeholder="Description..."
           onChange={(event) => {
-            setDescription(event.target.value,modifyPost);
+            setDescription(event.target.value, modifyPost);
           }}
         />
         <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-        <button className="btn-upload" onClick={upload}>Upload</button>
+        <button className="btn-upload" onClick={upload}>
+          Upload
+        </button>
       </div>
     </div>
   );
