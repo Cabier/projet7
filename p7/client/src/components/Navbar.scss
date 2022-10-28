@@ -6,8 +6,9 @@
      display: flex;
      justify-content: center;
      color: white;
+     flex-wrap: wrap;
      align-items: center;
-     
+     padding-bottom: 10px;
  }
  .Navbar a {
      font-size: 100%;

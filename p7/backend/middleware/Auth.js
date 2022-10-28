@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
     
     const username = decodedToken.username;
     const admin = decodedToken.admin;
-    console.log("aaa",admin)
+
     req.auth = { username, admin };
     if (req.body.username && req.body.username !== username) {
       throw "Invalid ID";

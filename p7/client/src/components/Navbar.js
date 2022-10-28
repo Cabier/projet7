@@ -1,13 +1,11 @@
 
+import { useNavigate } from "react-router-dom";
 import "./Navbar.scss";
 
-import { useNavigate } from "react-router-dom";
-
 function Navbar(props) {
- 
+
   let navigate = useNavigate();
 
-  
   return (
     <div className="Navbar">
       <img
@@ -20,14 +18,13 @@ function Navbar(props) {
           <a href="/home">Home</a>
           <a href="/upload">Upload</a>
           <a href="/profile">Profile</a>
-          <a href="/register">Register</a>
-          <a href="/login">Login</a>
-          <button className="deconnexion"
+          <button
+            className="deconnexion"
             onClick={() => {
               props.setLogedIn(false);
               navigate("/login", { replace: true });
               localStorage.setItem("loggedIn", false);
-              localStorage.clear()
+              localStorage.clear();
             }}
           >
             Disconnect
@@ -37,8 +34,6 @@ function Navbar(props) {
         <>
           <a href="/register">Register</a>
           <a href="/login">Login</a>
-          
-
         </>
       )}
     </div>

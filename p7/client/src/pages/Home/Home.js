@@ -1,37 +1,33 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Home.scss";
+import moment from "moment";
 import Axios from "axios";
-//import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faThumbsUp,
   faTrash,
   faPencil,
 } from "@fortawesome/free-solid-svg-icons";
-import moment from "moment";
+import "./Home.scss";
 
-//respondtata c'est l'array qu'on return
-//avec uploadmap je rends les uploads individuels
 function Home() {
   const [uploads, setUploads] = useState([]);
   const [user, setUser] = useState({});
   const [description, setDescription] = useState([]);
 
   const inputRef = useRef([]);
-  console.log("''''''",inputRef)
-  //useref c'est comme une boite qui peut contenir une valeur mutable
-  //et permet de cibler un élément du DOM un peu à la manière d'un getElementById
+
   useEffect(() => {
     getPosts();
+
     Axios.get("http://localhost:5000/user/profil")
       .then(({ data }) => {
         setUser(data);
-        console.log("dataprofil",data)
       })
       .catch((err) => console.log("erreur", err));
+
     if (!localStorage.getItem("loggedIn")) {
       localStorage.setItem("loggedIn", false);
-    }console.log("logggg",localStorage)
+    }
   }, []);
 
   const getPosts = () => {
@@ -67,25 +63,23 @@ function Home() {
     }
   };
 
-  const handleDescription = (event, key) => {
+  const handleChangeDescription = (event, key) => {
+
     setDescription(
       description.map((val, index) => {
         if (key === index) return event.target.value;
         else return val;
       })
     );
+
   };
 
   const updateDescription = (event, key) => {
     Axios.put("http://localhost:5000/upload/modifyPost/" + uploads[key].id, {
       description: description[key],
-    })
-      .then(() => {
-        //navigate("/home", { replace: true });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    }).catch((err) => {
+      console.log(err);
+    });
   };
 
   return (
@@ -113,7 +107,7 @@ function Home() {
             <div className="Content">
               <div className="title">{val.title}</div>
               <div className="date-creation">
-                Posté par : {val.author} le :{" "} 
+                Posté par : {val.author} le :{" "}
                 {moment(val.dateCreation).format("DD/MM/YYYY à h:mm:ss a")}
               </div>
               {isAdmin ? (
@@ -125,7 +119,7 @@ function Home() {
                     value={description[key]}
                     className="description__input"
                     placeholder="Description..."
-                    onChange={(e) => handleDescription(e, key)}
+                    onChange={(e) => handleChangeDescription(e, key)}
                     onBlur={(e) => updateDescription(e, key)}
                   />
                   <FontAwesomeIcon
